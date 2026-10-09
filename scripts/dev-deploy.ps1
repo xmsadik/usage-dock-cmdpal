@@ -18,10 +18,10 @@ param(
 $ErrorActionPreference = 'Stop'
 $project = Join-Path $PSScriptRoot '..\src\ClaudeUsage\ClaudeUsage.csproj'
 
-$existing = Get-AppxPackage -Name 'ClaudeUsage'
+$existing = Get-AppxPackage -Name 'UsageDock'
 if ($existing) {
   # The host keeps the COM server alive; stop it so the files can be replaced.
-  Get-Process -Name 'ClaudeUsage' -ErrorAction SilentlyContinue | Stop-Process -Force
+  Get-Process -Name 'UsageDock' -ErrorAction SilentlyContinue | Stop-Process -Force
   Remove-AppxPackage -Package $existing.PackageFullName
   Write-Host "Removed $($existing.PackageFullName)"
 }
@@ -32,5 +32,5 @@ if ($LASTEXITCODE -ne 0) { throw "Build failed ($LASTEXITCODE)" }
 
 $manifest = Join-Path $PSScriptRoot "..\src\ClaudeUsage\bin\x64\$Configuration\net10.0-windows10.0.26100.0\win-x64\AppxManifest.xml"
 Add-AppxPackage -Register (Resolve-Path $manifest)
-Get-AppxPackage -Name 'ClaudeUsage' | Select-Object Name, Version, InstallLocation
+Get-AppxPackage -Name 'UsageDock' | Select-Object Name, Version, InstallLocation
 Write-Host 'Deployed. In Command Palette, run "Reload" to load the new build.'

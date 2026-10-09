@@ -17,9 +17,9 @@ internal sealed partial class UsageDetailPage : ContentPage
         _store = store;
         _settings = settingsManager;
 
-        Id = "ClaudeUsage.page.detail";
+        Id = "UsageDock.page.detail";
         Name = "Open";
-        Title = "Claude Usage";
+        Title = "Usage Dock";
         Icon = new IconInfo(string.Empty);
 
         Commands =

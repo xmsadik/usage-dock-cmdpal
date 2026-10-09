@@ -9,15 +9,15 @@
   IgnorableNamespaces="uap uap3 rescap">
 
   <Identity
-    Name="ClaudeUsage"
-    Publisher="CN=ClaudeUsageDev"
-    Version="0.1.0.0" />
+    Name="UsageDock"
+    Publisher="CN=UsageDockDev"
+    Version="0.2.0.0" />
   <!-- When you're ready to publish your extension, you'll need to change the
        Publisher= to match your own identity -->
 
   <Properties>
-    <DisplayName>Claude Usage</DisplayName>
-    <PublisherDisplayName>Claude Usage</PublisherDisplayName>
+    <DisplayName>Usage Dock for Claude Code</DisplayName>
+    <PublisherDisplayName>xmsadik</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -35,8 +35,8 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="Claude Usage"
-        Description="Claude subscription usage in the Command Palette Dock"
+        DisplayName="Usage Dock for Claude Code"
+        Description="Claude subscription usage in the Command Palette Dock. Unofficial; not affiliated with Anthropic."
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png">
@@ -46,21 +46,21 @@
       <Extensions>
         <com:Extension Category="windows.comServer">
           <com:ComServer>
-            <com:ExeServer Executable="ClaudeUsage.exe" Arguments="-RegisterProcessAsComServer" DisplayName="Claude Usage">
-              <com:Class Id="502F7998-2702-45D9-917B-5C0080855890" DisplayName="Claude Usage" />
+            <com:ExeServer Executable="UsageDock.exe" Arguments="-RegisterProcessAsComServer" DisplayName="Usage Dock for Claude Code">
+              <com:Class Id="477E8438-8384-42DC-BBE8-E7C73FB98369" DisplayName="Usage Dock for Claude Code" />
             </com:ExeServer>
           </com:ComServer>
         </com:Extension>
         <uap3:Extension Category="windows.appExtension">
           <uap3:AppExtension Name="com.microsoft.commandpalette"
-            Id="ClaudeUsage"
+            Id="UsageDock"
             PublicFolder="Public"
-            DisplayName="Claude Usage"
-            Description="Claude subscription usage in the Command Palette Dock">
+            DisplayName="Usage Dock for Claude Code"
+            Description="Claude subscription usage in the Command Palette Dock. Unofficial; not affiliated with Anthropic.">
             <uap3:Properties>
               <CmdPalProvider>
                 <Activation>
-                  <CreateInstance ClassId="502F7998-2702-45D9-917B-5C0080855890" />
+                  <CreateInstance ClassId="477E8438-8384-42DC-BBE8-E7C73FB98369" />
                 </Activation>
                 <SupportedInterfaces>
                   <Commands/>

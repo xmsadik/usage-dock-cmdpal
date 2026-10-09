@@ -1,10 +1,10 @@
 {
   "profiles": {
-    "ClaudeUsage (Package)": {
+    "UsageDock (Package)": {
       "commandName": "MsixPackage",
       "doNotLaunchApp": true
     },
-    "ClaudeUsage (Unpackaged)": {
+    "UsageDock (Unpackaged)": {
       "commandName": "Project"
     }
   }

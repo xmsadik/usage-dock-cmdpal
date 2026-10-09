@@ -13,7 +13,7 @@ internal sealed partial class SettingsManager : JsonSettingsManager
 {
     private const string DefaultRefreshMinutes = "5";
 
-    private static readonly string _namespace = "ClaudeUsage";
+    private static readonly string _namespace = "UsageDock";
 
     private static string Namespaced(string propertyName) => $"{_namespace}.{propertyName}";
 
@@ -46,7 +46,7 @@ internal sealed partial class SettingsManager : JsonSettingsManager
 
     internal static string SettingsJsonPath()
     {
-        var directory = Utilities.BaseSettingsPath("ClaudeUsage");
+        var directory = Utilities.BaseSettingsPath("UsageDock");
         Directory.CreateDirectory(directory);
 
         return Path.Combine(directory, "settings.json");

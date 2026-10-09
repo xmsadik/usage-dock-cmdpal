@@ -1,8 +1,8 @@
-# Claude Usage for Command Palette
+# Usage Dock for Claude Code
 
 A PowerToys Command Palette extension that puts your Claude subscription usage in the **Dock**.
 
-> Unofficial community project. Not affiliated with or endorsed by Anthropic or Microsoft.
+> Unofficial community project. Not affiliated with or endorsed by Anthropic or Microsoft. Claude and Claude Code are trademarks of Anthropic, PBC; they are used here only to say which tool this extension works with.
 
 - **In the Dock:** the 5-hour session limit, e.g. `🟢 30%  5h · 2h 14m` (🟡 from 70%, 🔴 from 90%).
 - **Click it:** all limits (session, weekly, model-scoped such as Fable weekly) with reset countdowns, your plan, and, at the bottom, local token stats.
@@ -35,16 +35,16 @@ The extension reuses the OAuth token Claude Code already stores. The token goes 
 
 ### 2. Download
 
-From the [latest release](https://github.com/xmsadik/claude-usage-cmdpal/releases/latest) download:
-- `ClaudeUsageDev.cer`
-- the package for your CPU: `ClaudeUsage_<version>_x64.msix` (Intel/AMD) or `ClaudeUsage_<version>_arm64.msix` (Arm, e.g. Snapdragon). Not sure? Run `$env:PROCESSOR_ARCHITECTURE` in PowerShell: `AMD64` → x64, `ARM64` → arm64.
+From the [latest release](https://github.com/xmsadik/usage-dock-cmdpal/releases/latest) download:
+- `UsageDockDev.cer`
+- the package for your CPU: `UsageDock_<version>_x64.msix` (Intel/AMD) or `UsageDock_<version>_arm64.msix` (Arm, e.g. Snapdragon). Not sure? Run `$env:PROCESSOR_ARCHITECTURE` in PowerShell: `AMD64` → x64, `ARM64` → arm64.
 
 ### 3. Trust the certificate (once per machine)
 
 The package is signed with a self-signed certificate, so Windows has to be told to trust it. In **PowerShell as Administrator**, in the download folder:
 
 ```powershell
-Import-Certificate .\ClaudeUsageDev.cer -CertStoreLocation Cert:\LocalMachine\TrustedPeople
+Import-Certificate .\UsageDockDev.cer -CertStoreLocation Cert:\LocalMachine\TrustedPeople
 ```
 
 ### 4. Install
@@ -52,25 +52,33 @@ Import-Certificate .\ClaudeUsageDev.cer -CertStoreLocation Cert:\LocalMachine\Tr
 In a normal PowerShell window (or double-click the `.msix` and choose *Install*):
 
 ```powershell
-Add-AppxPackage .\ClaudeUsage_0.1.0.0_x64.msix
+Add-AppxPackage .\UsageDock_<version>_x64.msix
 ```
 
 ### 5. Show it in the Dock
 
 1. Open Command Palette and run **Reload** so it picks up the new extension.
-2. The *Claude Usage* band usually appears in the Dock by itself. If it doesn't, search for **Claude Usage** in Command Palette, open its context menu and run **Pin to Dock** (choose the *Right* side to sit next to the system info).
-3. Click the band for the detail view. Settings: search **Claude Usage** → *Settings*.
+2. The *Usage Dock* band usually appears in the Dock by itself. If it doesn't, search for **Usage Dock** in Command Palette, open its context menu and run **Pin to Dock** (choose the *Right* side to sit next to the system info).
+3. Click the band for the detail view. Settings: search **Usage Dock** → *Settings*.
 
 ### Update
 
 Download the newer `.msix` and run `Add-AppxPackage` again; the certificate step isn't needed again. Then **Reload** Command Palette.
 
-### Uninstall
+### Upgrading from 0.1.x ("Claude Usage")
+
+Version 0.2 renamed the extension and changed its package identity and signing certificate, so Windows treats it as a new app. Remove the old one first, then follow steps 3 to 5 with the new files; the refresh-interval setting is not carried over:
 
 ```powershell
 Get-AppxPackage ClaudeUsage | Remove-AppxPackage
+```
+
+### Uninstall
+
+```powershell
+Get-AppxPackage UsageDock | Remove-AppxPackage
 # optional, as Administrator: remove the trusted certificate
-Get-ChildItem Cert:\LocalMachine\TrustedPeople | Where-Object Subject -eq 'CN=ClaudeUsageDev' | Remove-Item
+Get-ChildItem Cert:\LocalMachine\TrustedPeople | Where-Object Subject -eq 'CN=UsageDockDev' | Remove-Item
 ```
 
 ### Troubleshooting
@@ -78,7 +86,7 @@ Get-ChildItem Cert:\LocalMachine\TrustedPeople | Where-Object Subject -eq 'CN=Cl
 | Symptom | Fix |
 |---|---|
 | `0x800B0109` / "the root certificate … is not trusted" on install | Step 3 was skipped or not run as Administrator. |
-| `0x80073CFB` / "a package with the same identity is already installed" | A development build is registered: `Get-AppxPackage ClaudeUsage \| Remove-AppxPackage`, then install again. |
+| `0x80073CFB` / "a package with the same identity is already installed" | A development build is registered: `Get-AppxPackage UsageDock \| Remove-AppxPackage`, then install again. |
 | Band doesn't appear | Check **Enable Dock** is on, run **Reload**, then use **Pin to Dock** as in step 5. |
 | Band shows `⚠️ auth` | The Claude Code sign-in expired. Start Claude Code once (or run `claude auth login`); the band recovers on the next refresh. |
 | Band shows `--%` for a long time | No usage data yet: Claude Code must be signed in on this machine with a Pro/Max account. |
@@ -86,7 +94,7 @@ Get-ChildItem Cert:\LocalMachine\TrustedPeople | Where-Object Subject -eq 'CN=Cl
 
 ## Settings
 
-Command Palette → *Claude Usage* → *Settings*: **Refresh interval** (1, 2, 5, 10, 15, 30 min; default 5).
+Command Palette → *Usage Dock* → *Settings*: **Refresh interval** (1, 2, 5, 10, 15, 30 min; default 5).
 
 ## Build from source
 
@@ -103,10 +111,18 @@ After deploying, run **Reload** in Command Palette. If the band does not appear 
 ### MSIX package
 
 ```powershell
-.\scripts\pack.ps1 -Sign        # dist\...\ClaudeUsage_<ver>_x64.msix + dist\ClaudeUsageDev.cer
+.\scripts\pack.ps1 -Sign        # dist\...\UsageDock_<ver>_x64.msix + dist\UsageDockDev.cer
 ```
 
-`-Platform ARM64` builds the Arm package. The first `-Sign` run creates a self-signed `CN=ClaudeUsageDev` code-signing certificate in `Cert:\CurrentUser\My` and reuses it afterwards. Install the result as described in [Installation](#installation).
+`-Platform ARM64` builds the Arm package. The first `-Sign` run creates a self-signed `CN=UsageDockDev` code-signing certificate in `Cert:\CurrentUser\My` and reuses it afterwards. Install the result as described in [Installation](#installation).
+
+Back up that certificate with its private key. Without it, later releases can't be signed with the same certificate and every user has to trust a new one:
+
+```powershell
+.\scripts\backup-signing-cert.ps1 -Destination D:\backup   # asks for a password, writes UsageDock-signing.pfx
+```
+
+The icons are generated by `python scripts/make-icons.py` (needs Pillow).
 
 ## Layout
 
@@ -114,7 +130,7 @@ After deploying, run **Reload** in Command Palette. If the band does not appear 
 src/ClaudeUsage/        Command Palette extension (Dock band, detail page, settings, UsageStore)
 src/ClaudeUsage.Core/   Plain .NET library: credentials, API client, parser, transcript scanner, markdown
 tests/ClaudeUsage.Tests xUnit tests for Core
-scripts/                dev-deploy.ps1, pack.ps1
+scripts/                dev-deploy.ps1, pack.ps1, make-icons.py, backup-signing-cert.ps1
 ```
 
 ## Known host issues

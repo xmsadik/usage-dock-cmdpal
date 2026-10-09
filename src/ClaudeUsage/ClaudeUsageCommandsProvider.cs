@@ -19,8 +19,8 @@ public partial class ClaudeUsageCommandsProvider : CommandProvider
 
     public ClaudeUsageCommandsProvider()
     {
-        DisplayName = "Claude Usage";
-        Id = "ClaudeUsage";
+        DisplayName = "Usage Dock";
+        Id = "UsageDock";
         Icon = IconHelpers.FromRelativePath("Assets\\StoreLogo.png");
 
         _store = new UsageStore(_settingsManager);
@@ -39,7 +39,7 @@ public partial class ClaudeUsageCommandsProvider : CommandProvider
         _usageBand = new UsageBand(_store, detailPage);
 
         // Command.Id must be non-empty or the host silently drops the band.
-        _dockBand = new WrappedDockItem([_usageBand], "ClaudeUsage.dock.usage", "Claude Usage");
+        _dockBand = new WrappedDockItem([_usageBand], "UsageDock.dock.usage", "Usage Dock");
 
         Settings = _settingsManager.Settings;
     }

@@ -9,7 +9,7 @@ using Microsoft.CommandPalette.Extensions;
 
 namespace ClaudeUsage;
 
-[Guid("502F7998-2702-45D9-917B-5C0080855890")]
+[Guid("477E8438-8384-42DC-BBE8-E7C73FB98369")]
 public sealed partial class ClaudeUsageExtension : IExtension, IDisposable
 {
     private readonly ManualResetEvent _extensionDisposedEvent;
